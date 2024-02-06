@@ -1,0 +1,32 @@
+[profile.dev]
+opt-level = "z"
+
+[profile.release]
+opt-level = "z"
+
+[workspace]
+members = ["dnas/*/zomes/coordinator/*", "dnas/*/zomes/integrity/*"]
+resolver = "2"
+
+[workspace.dependencies]
+hdi = "0.3"
+hdk = "0.2"
+serde = "1"
+
+[workspace.dependencies.griffy]
+path = "dnas/griffy/zomes/coordinator/griffy"
+
+[workspace.dependencies.griffy_integrity]
+path = "dnas/griffy/zomes/integrity/griffy"
+
+[workspace.dependencies.profiles]
+path = "dnas/griffy/zomes/coordinator/profiles"
+
+[workspace.dependencies.profiles_integrity]
+path = "dnas/griffy/zomes/integrity/profiles"
+
+[workspace.dependencies.file_storage]
+path = "dnas/griffy/zomes/coordinator/file_storage"
+
+[workspace.dependencies.file_storage_integrity]
+path = "dnas/griffy/zomes/integrity/file_storage"

@@ -1,0 +1,665 @@
+/* @font-face {
+  font-family: "Poppins";
+  src: url('/fonts/Poppins-Regular.ttf');
+  font-weight: regular;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url('/fonts/Poppins-SemiBold.ttf');
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url('/fonts/Poppins-Italic.ttf');
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url('/fonts/Poppins-SemiBoldItalic.ttf');
+  font-style: italic;
+  font-weight: bold;
+} */
+
+@font-face {
+  font-family: 'Figtree';
+  src: url('/fonts/Figtree-Regular.ttf');
+  font-weight: regular;
+}
+@font-face {
+  font-family: 'Figtree';
+  src: url('/fonts/Figtree-Bold.ttf');
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: 'Figtree';
+  src: url('/fonts/Figtree-Italic.ttf');
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Figtree';
+  src: url('/fonts/Figtree-BoldItalic.ttf');
+  font-style: italic;
+  font-weight: bold;
+}
+
+
+:root {
+  --mdc-theme-primary: #7B1FA2;
+  --mdc-theme-secondary: #FF5722;
+  --sl-font-sans: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  font-family: 'Figtree', sans-serif;
+  letter-spacing: -.008rem;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(35, 32, 74, 1.0);
+  padding: 0px;
+  height: 100%;
+  overflow: hidden; /* In general, it's a good idea to have the body take up the full viewport height and have a fixed layout with no scrollbar. Then, you can have a scrollable inner container like .pane-content to handle the overflow of the content. This approach helps keep the page structure clean and allows you to control the scrolling behavior more effectively. */
+}
+
+body {
+  background: linear-gradient(360deg, rgba(86, 94, 109, .10) 1.94%, rgba(86, 94, 109, 0) 90.23%);
+}
+
+p, div, span, h1, h2, h3 {
+  color: rgba(86, 94, 109, 1.0);
+}
+
+#content {
+  height: 100%;
+  padding: 0px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+input, button {
+  font-family: inherit;
+  font-size: inherit;
+}
+  
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Color Variables */
+:root {
+  --primary-color: #536DFE;
+  --secondary-color: #FF9800;
+  --bg-color: #F5F5F5;
+  --light-text-color: #FFF;
+  --dark-text-color: #333;
+  --border-color: #DDD;
+}
+
+/* Layout and Spacing */
+.space {
+  margin-bottom: 1rem;
+}
+
+.space-lg {
+  margin-bottom: 2rem;
+}
+
+/*Now, let's style the bottom navigation.*/
+.nav {
+  background-color: #fff;
+  box-shadow: 0px -10px 15px rgba(0, 0, 0, .15);
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--primary-color);
+  background-color: #fff;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+upload-files div {
+  border: 1px solid red;
+}
+
+.nav-button {
+  flex: 1;
+  text-align: center;
+  color: var(--light-text-color);
+  padding: 0.5rem;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  font-size: 9px;
+  padding: 5px;
+  margin: 5px;
+  background-color: transparent;
+  color: rgba(86, 94, 109, 1);
+  transition: all .25s ease;
+}
+
+.nav-button span {
+  opacity: .8;
+}
+
+.nav-button.selected {
+  background: linear-gradient(228.21deg, #8E2FD8 0%, #2F87D8 94.99%);
+  box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.15);
+  color: rgba(255,255,255,1);
+  padding: 0px 10px;
+  height: 100%;
+  margin:0;
+}
+
+.nav-button.selected span {
+  opacity: 1;
+}
+
+
+.nav-button .button-title {
+  font-size: 9px;
+  padding-top: 5px;
+}
+
+.nav-button.selected .button-title {
+  color: rgba(255,255,255,1);
+}
+
+/*Here are some basic styles for the pane and modal:*/
+
+.pane {
+  padding: 0px;
+  background-color: var(--bg-color);
+  background-color: #fff;
+  height: calc(100% - 60px); /* Subtract the height of the bottom navigation */
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: auto;
+  flex-direction: column;
+}
+
+.pane.spaces {
+  padding-bottom: 100px;
+}
+
+.pane.you .pane-header {
+  text-align: center;
+  justify-content: left;
+  display: flex;
+  max-width: 720px;
+  margin: 0 auto;
+  padding-top: 50px;
+}
+
+.pane-content {
+  padding-top: 30px;
+  width: 100%;
+  height: auto;
+}
+
+.modal {
+  background-color: var(--light-text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Finally, let's style the header: */
+.pane-header{
+  background-color: rgba(255, 255, 255, 1);
+  color: rgba(22, 26, 30, 1.0);
+  padding: .5rem;
+  font-size: 1rem;
+  font-weight: 400;
+  width: 100vw;
+  text-align: center;
+  box-shadow: 0px 10px 15px rgba(0, 0, 0, .15);
+  z-index: 10;
+  align-items: center;
+  align-content: center;
+  display: flex;
+  position: sticky;
+}
+
+.header-content {
+  max-width: 720px;
+  width: 100%;
+  display: flex;
+  margin: 0 auto;
+  justify-content: space-between;
+}
+
+.create {
+  display: none;
+}
+
+.details {
+
+}
+
+.space-pic{
+  max-width: 5em;
+  max-height: 5em;
+}
+
+.session{
+  margin-bottom: 8px; 
+  width:100%;
+}
+
+.section-controls {
+  display: flex; 
+  flex-direction: row;
+  align-self: center;
+  position: sticky;
+  top: 30px;
+  flex-wrap: wrap;
+}
+
+/*color theme*/
+html{
+  background-color: #e6f2f5;
+}
+
+.pane-desktop{
+  width: 100vw;
+}
+.wrap-row {
+  display: flex; flex-direction: row;flex-wrap: wrap;
+} 
+.center-row {
+  display: flex; flex-direction: row; margin-bottom: 16px; align-items: center;
+}
+
+.filter-modal {
+  max-width: 90%;
+  background-color: rgba(255,255,255,1);
+  padding: 10px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+  z-index: 10;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, .15);
+  max-width: 600px;
+}
+
+.discover {
+  width: 100%;
+  display: block;
+  flex-direction: column;
+}
+.discover-section {
+  display: flex;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.discover-section.feed {
+  padding-bottom: 100px;
+}
+
+.discover-filter {
+  padding: 20px 0;
+}
+
+@media (min-width: 720px) {
+  .filter-modal {
+    height: calc(100vh - 50px);
+    top: 50px;
+    position: fixed;
+    right: 0;
+  }
+}
+
+/*debug*/
+#content{
+}
+
+html{
+  background-color: #cadddf;
+}
+.note{
+  background-color: #ff00ff;
+}
+
+main {
+  padding: 0em;
+  max-width: 100%;
+  margin: 0 auto;
+}
+body {
+  background-color: #fff;
+}
+.pane {
+  position: relative;
+}
+
+:global(sl-dialog) {
+  z-index: 10000000;
+  position: relative;
+  display: block;
+}
+
+:global(.modal) {
+  background-color: white;
+  padding: 10px;
+  position: absolute;
+  top: 5px;
+
+  border: solid 1px;
+  display: flex; flex-direction: column;
+  max-height: 100%;
+  overflow: auto;
+}
+
+.create-session {
+ max-width: 720px;
+ border: 1px solid rgba(239, 240, 243, 1.0);
+ display: flex;
+ background-color: rgba(243, 243, 245, 1.0);
+ width: 100%;
+ opacity: .6;
+  transition: all .25s ease;
+
+}
+
+.create-session:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.summary {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+ .slot {
+    min-width: 70px;
+   width: 95px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+ }
+
+ .slot-wrapper {
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ }
+
+ .button-group {
+  display: flex;
+ }
+
+.info {
+  width: 100%;
+}
+
+.left-side {
+  padding: 0;
+}
+
+.left-side p {
+  opacity: .5;
+  font-size: 12px;
+}
+
+.selected {
+  color: rgba(22, 26, 30, 1);
+  background-color: transparent;
+}
+
+.nav-button.selected .button-title {
+  font-weight: bold;
+}
+
+.nav-button:hover {
+  color: rgba(22, 26, 30, 1);
+  cursor: pointer;
+}
+
+.nav-button.selected:hover {
+  color: rgba(255,255,255,1);
+}
+
+.nav-button:active {
+  background-color: #4f2f39;
+  color: #fceed7;
+  cursor: pointer;
+}
+
+.pane {
+  width: 100vw;
+}
+
+#content {
+  height: 100vh;
+}
+
+.spinning {
+animation: spin-animation 1s infinite;
+}
+
+@keyframes spin-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+}
+
+.session-details {
+  background-color: white;
+  position: absolute;
+  border: solid 1px;
+  display: flex; flex-direction: column;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  overflow: auto;
+  z-index: 100;
+  width: 100%;
+}
+
+.nav-button .button-title {
+  font-size: 12px;
+}
+
+  
+.create-session {
+  display: none;
+}
+
+.bookmark svg path {
+  fill: rgba(253, 179, 58, .5);
+}
+
+.bookmark.selected {     
+  background: linear-gradient(129.46deg, #E48C00 8.45%, #FFC42E 93.81%);
+}
+
+.attend svg path {
+  fill: #23AA50;
+}
+
+.attend.selected {        
+  background: linear-gradient(129.46deg, #23AA50 8.45%, #00DAA6 93.81%); 
+}
+
+.hide svg path {
+  fill: rgba(0,0,0,.5);
+}
+
+.hide.selected {
+  background-color: rgba(0,0,0,1);
+}
+
+.bookmark.selected svg path, .attend.selected svg path, .hide.selected svg path {
+  fill: rgba(255,255,255,1)
+}
+
+@media (min-width: 720px) {
+
+  .nav-button.selected {
+    border-radius: 0;
+  }
+  .nav {
+    top: 0;
+    bottom: auto;
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, .15);
+    justify-content: space-between;
+
+  }
+
+  .nav-button {
+    flex-direction: row;
+    padding: 10px 10px;
+    max-width: 100%;
+    margin: 0;
+    border-right: 1px
+  }
+
+  .nav-button .button-title {
+    font-size: 14px;
+    padding-top: 0;
+  }
+
+  svg.nav-icon {
+    height: 20px !important;
+    margin-right: 8px;
+  }
+  
+  html {
+    padding-bottom: 0;
+  }
+
+  body {
+    padding-bottom: 0;
+  }
+
+  .pane-header {
+    background: linear-gradient(180deg, #FFFFFF90 70%, rgba(255, 255, 255, .0) 100%);
+    background-color: transparent;
+    z-index: 10;
+    box-shadow: none;
+    max-width: 100%;
+    padding-top: 70px;
+    justify-content: center;
+    margin: 0 auto;
+  }
+
+  .header-content {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .pane.you {
+    padding-top: 50px;
+  }
+
+  .pane-content {
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 100px;
+  }
+
+  .pane {
+    height: 100%;
+    background-color: transparent;
+  }
+
+
+  .pill-button {
+    display: block;
+    position: sticky;
+    top: 15px;
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 25px;
+    padding: 0 15px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, .15);
+    cursor: pointer;
+    border-top: solid 1px rgba(240, 240, 240, 1.0);
+  }
+
+  .pill-button:hover {
+    background-color: rgb(240, 249, 2244);
+    border: solid 1px rgb(149, 219, 252);
+    color:  rgb(3, 105, 161);
+    cursor: pointer;
+  }
+
+  .pill-button span {
+    display: block;
+    padding: 0 5px 0 0;
+  }
+  
+  .micro-button {
+    cursor:pointer;
+    border: solid 1px #f0f0f0;
+    border-radius: 3px;
+    height: 23px;
+    padding: 0 4px 0 4px;
+  }
+  .micro-button:hover {
+    background-color: rgb(240, 249, 2244);
+    border: solid 1px rgb(149, 219, 252);
+    color:  rgb(3, 105, 161);
+  }
+  
+  .header-content h3, .create-session, .button-group.settings .button-title {
+    display: none;
+  }
+
+  .header-content {
+    padding-top: 15px;
+  }
+
+  .button-group.settings svg {
+    margin-right: 0;
+  }
+
+  .section-controls sl-button {
+    border: none;
+    border-radius: 100%;
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, .15);
+    width: 35px;
+    height: 35px;
+  }
+}
