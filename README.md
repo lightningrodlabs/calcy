@@ -1,6 +1,6 @@
-# Griffy!
+# Calcy!
 
-Holochain hApp for collaborative diagramming.
+Holochain hApp for collaborative spreadsheets.
 
 Real-time colloaboration delivered by [syn](https://github.com/holochain/syn).
 
