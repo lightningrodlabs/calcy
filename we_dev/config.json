@@ -58,7 +58,7 @@
         "description": "Let's do it!",
         "icon": {
           "type": "filesystem",
-          "path": "/home/leo/hApps/calcy/we_dev/griffy_icon.svg"
+          "path": "/home/leo/hApps/calcy/we_dev/calcy.png"
         },
         "source": {
           "type": "localhost",

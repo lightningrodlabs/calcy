@@ -19,7 +19,6 @@
   // import ReactAdapter from "./ReactAdapter.svelte";
   // import "@fortune-sheet/react/dist/index.css"
   import type { IWorkbookData } from '@univerjs/core';
-  // import { pause } from '@holochain/tryorama';
 
   import "@univerjs/design/lib/index.css";
   import "@univerjs/ui/lib/index.css";
@@ -42,8 +41,9 @@
   import { UniverSheetsFormulaPlugin } from "@univerjs/sheets-formula";
   import { UniverSheetsUIPlugin } from "@univerjs/sheets-ui";
   import { UniverUIPlugin } from "@univerjs/ui";
-    import { spread } from "svelte/internal";
+  import { spread } from "svelte/internal";
 
+  const delay = ms => new Promise(res => setTimeout(res, ms));
   let sheet;
 
   const univer = new Univer({
@@ -60,25 +60,38 @@
   });
 
   const maybeSave = async () =>{
-    // await pause(10)
-    const previousVersion = JSON.stringify(previousState["spreadsheet"]["sheets"])
-    const newVersion = JSON.stringify($state["spreadsheet"]["sheets"])
-    console.log(previousVersion)
-    console.log("-------------")
-    console.log(newVersion)
-    if (previousVersion !== newVersion) {
-      console.log("unsaved changes")
+    await delay(100)
+    const previousVersion = JSON.stringify(previousState)
+    const newVersion = JSON.stringify($state)
+    // console.log(previousVersion)
+    // console.log("-------------")
+    // console.log(newVersion)
+    // if (previousVersion !== newVersion) {
+      // console.log("unsaved changes")
       saveSheet()
-    }
+    // }
   }
 
   function checkKey(e: any) {
-    // if (e.key === "Escape" && !e.shiftKey) {
+    if (["Enter", 
+        "Tab", 
+        "ArrowUp", 
+        "ArrowDown", 
+        "ArrowLeft", 
+        "ArrowRight", 
+        "Backspace", 
+        "Delete", 
+        "Escape", 
+        "Home", 
+        "End", 
+        "PageUp", 
+        "PageDown"
+      ].includes(e.key) && !e.shiftKey) {
     //   e.preventDefault();
     //   open = false;
-    // }
-    console.log("hi")
-    maybeSave()
+        console.log("hi")
+        maybeSave()
+    }
   }
 
   const { getStore } :any = getContext("store");
@@ -136,7 +149,7 @@
       spreadsheet: sheetData
     }]
     activeBoard.requestChanges(changes)
-    previousState = cloneDeep($state)
+    previousState = {...cloneDeep($state)}
     console.log("previous state set", previousState)
 
     // const l = await activeBoard.readableState()

@@ -143,6 +143,7 @@
   .board-control {
     margin-right: 10px;
   }
+  
   .title-text {
     display: flex;
     flex-direction: row;

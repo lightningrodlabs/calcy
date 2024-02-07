@@ -103,9 +103,12 @@
     box-shadow: 0px 0px 20px rgba(0, 0, 0, .15);
 }
 sl-input::part(base) {
-    color: #fff;
-    background-color: rgb(10 17 76);
-    border: 1px solid rgba(71, 76, 154, 1.0);
+    /* color: #fff; */
+    color: white;
+    /* background-color: rgb(10 17 76); */
+    background-color: rgb(62, 62, 62);
+    /* border: 1px solid rgba(71, 76, 154, 1.0); */
+    border: 1px solid rgb(168 168 168);
 }
 
 sl-input::part(input) {

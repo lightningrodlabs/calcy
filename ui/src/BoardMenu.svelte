@@ -127,7 +127,9 @@
         max-width: 0;
         display: flex;
         flex-direction: column;
-        background: linear-gradient(94.53deg, #164B9A 12.76%, #5B47D6 99.41%);
+        /* background: linear-gradient(94.53deg, #164B9A 12.76%, #5B47D6 99.41%); */
+        /* background: linear-gradient(94.53deg, #2b2e31 12.76%, #545454 99.41%); */
+        background: linear-gradient(94.53deg, #81878e 12.76%, #c2c2c2 99.41%);
         flex: 0 0 auto;
         align-items: flex-start;
         position: relative;
@@ -178,7 +180,8 @@
         position: relative;
         width: 290px;
         height: 50px;
-        background: rgba(24, 55, 122, 1.0);
+        /* background: rgba(24, 55, 122, 1.0); */
+        background: rgb(229, 183, 0);
         border: 1px solid #4A559D;
         color: #fff;
         display: flex;
@@ -197,7 +200,8 @@
         padding: 15px 5px;
         width: 300px;
         border: 1px solid #252d5d;
-        background: rgb(10, 25, 57);
+        /* background: rgb(10, 25, 57); */
+        background: rgb(252, 202, 0);
         margin: 0 -5px 0 -5px;
         box-shadow: 0px 4px 15px rgba(35, 32, 74, 0.8);
     }
