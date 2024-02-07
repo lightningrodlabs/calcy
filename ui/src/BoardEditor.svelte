@@ -7,12 +7,12 @@
     import '@shoelace-style/shoelace/dist/components/checkbox/checkbox.js';
     import SvgIcon from "./SvgIcon.svelte"
     import { cloneDeep } from "lodash";
-    import type { GriffyStore } from './store';
+    import type { CalcyStore } from './store';
   import type { EntryHash } from '@holochain/client';
 
     const { getStore } :any = getContext('store');
 
-    const store:GriffyStore = getStore();
+    const store:CalcyStore = getStore();
     $: uiProps = store.uiProps
 
     export let handleSave
@@ -143,7 +143,7 @@
   .board-control {
     margin-right: 10px;
   }
-  
+
   .title-text {
     display: flex;
     flex-direction: row;

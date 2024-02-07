@@ -2,7 +2,7 @@
     import { getContext } from "svelte";
     import '@shoelace-style/shoelace/dist/components/dialog/dialog.js';
     import SvgIcon from "./SvgIcon.svelte";
-    import type { GriffyStore } from "./store";
+    import type { CalcyStore } from "./store";
     import {asyncDerived, toPromise} from '@holochain-open-dev/stores'
     import { BoardType } from "./boardList";
     import type { Board, BoardEphemeralState, BoardState } from "./board";
@@ -13,7 +13,7 @@
 
     const { getStore } :any = getContext('store');
 
-    const store:GriffyStore = getStore();
+    const store:CalcyStore = getStore();
 
 
     let dialog
@@ -72,11 +72,11 @@
 </script>
 
 
-<sl-dialog label="Griffy!: UI v0.1.0 for DNA v0.1.0" bind:this={dialog} width={600} >
+<sl-dialog label="Calcy!: UI v0.1.0 for DNA v0.1.0" bind:this={dialog} width={600} >
     <div class="about">
-        <p>Griffy! is a demonstration Holochain app built by Lightning Rod Labs.</p>
+        <p>Calcy! is a demonstration Holochain app built by Lightning Rod Labs.</p>
         <p> <b>Developers:</b>
-            Check out this hApp's source-code <a href="https://github.com/holochain-apps/griffy">in our github repo</a>.
+            Check out this hApp's source-code <a href="https://github.com/holochain-apps/calcy">in our github repo</a>.
             This project's real-time syncronization is powered by <a href="https://github.com/holochain/syn">Syn</a>, 
             a library that makes it really easy to build this kind of real-time collaboaration into Holochain apps.
         </p>

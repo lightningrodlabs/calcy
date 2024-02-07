@@ -2,13 +2,13 @@
     import '@shoelace-style/shoelace/dist/components/button/button.js';
     import AvatarDialog from './AvatarDialog.svelte';
     import { getContext, onMount } from "svelte";
-    import type { GriffyStore } from "./store";
+    import type { CalcyStore } from "./store";
     import Avatar from './Avatar.svelte';
     import { get } from 'svelte/store';    
     import { isWeContext } from '@lightningrodlabs/we-applet';
 
     const { getStore } :any = getContext('store');
-    const store:GriffyStore = getStore();
+    const store:CalcyStore = getStore();
     //@ts-ignore
     $: myProfile = get(store.profilesStore.myProfile).value
     $: myName =  myProfile ? myProfile.nickname  : ""

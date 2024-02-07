@@ -2,13 +2,13 @@
     import "@shoelace-style/shoelace/dist/components/skeleton/skeleton.js";
     import '@shoelace-style/shoelace/dist/components/dialog/dialog.js';
     import { getContext } from "svelte";
-    import type { GriffyStore } from "./store";
+    import type { CalcyStore } from "./store";
     import Avatar from './Avatar.svelte';
     import "@holochain-open-dev/stores/dist/debug-store.js"
     import type { AgentPubKey } from "@holochain/client";
   
     const { getStore } :any = getContext('store');
-    const store:GriffyStore = getStore();
+    const store:CalcyStore = getStore();
   
     //$: agents = store.profilesStore.agentsWithProfile
     $: agents = store.boardList.allAuthorAgents

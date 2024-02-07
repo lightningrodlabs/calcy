@@ -1,6 +1,6 @@
 <script lang="ts">
     import BoardEditor from './BoardEditor.svelte';
-    import type { GriffyStore } from './store';
+    import type { CalcyStore } from './store';
     import { getContext, onMount } from 'svelte';
     import { isEqual } from 'lodash'
     import { encodeHashToBase64, type EntryHash, type EntryHashB64 } from '@holochain/client';
@@ -24,7 +24,7 @@
 
     const { getStore } :any = getContext('store');
 
-    const store:GriffyStore = getStore();
+    const store:CalcyStore = getStore();
 
     const updateBoard = async ( name: string, props: BoardProps) => {
         const boardHashB64 = encodeHashToBase64(boardHash)

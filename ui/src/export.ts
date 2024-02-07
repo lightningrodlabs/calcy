@@ -7,7 +7,7 @@ interface BoardsExport {
 }
 
 const EXPORT_FORMAT_VERSION = "1"
-const PREFIX = "griffy"
+const PREFIX = "calcy"
 const download = (filename: string, text: string) => {
     var element = document.createElement('a');
     element.setAttribute('href', 'data:text/json;charset=utf-8,' + encodeURIComponent(text));

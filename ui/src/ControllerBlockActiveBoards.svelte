@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { GriffyStore } from './store'
+  import { CalcyStore } from './store'
   import { setContext } from 'svelte';
   import type { AppAgentClient } from '@holochain/client';
   import type { SynStore } from '@holochain-syn/store';
@@ -12,7 +12,7 @@
   export let weClient : WeClient
   export let profilesStore : ProfilesStore
 
-  let store: GriffyStore = new GriffyStore (
+  let store: CalcyStore = new CalcyStore (
     weClient,
     profilesStore,
     client,

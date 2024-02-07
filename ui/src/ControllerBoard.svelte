@@ -1,6 +1,6 @@
 <script lang="ts">
-    import GriffyPane from './GriffyPane.svelte'
-    import { GriffyStore } from './store'
+    import CalcyPane from './CalcyPane.svelte'
+    import { CalcyStore } from './store'
     import { setContext } from 'svelte';
     import type { AppAgentClient, EntryHash } from '@holochain/client';
     import type { SynStore } from '@holochain-syn/store';
@@ -13,7 +13,7 @@
     export let profilesStore : ProfilesStore
     export let board : EntryHash
 
-    let store: GriffyStore = new GriffyStore (
+    let store: CalcyStore = new CalcyStore (
       weClient,
       profilesStore,
       client,
@@ -47,7 +47,7 @@
 
 
         {#if $activeBoardHash !== undefined}
-          <GriffyPane activeBoard={$activeBoard} standAlone={true}/>
+          <CalcyPane activeBoard={$activeBoard} standAlone={true}/>
         {:else}
           Unable to find board.
         {/if}

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getContext, onMount } from "svelte";
-  import type { GriffyStore } from "./store";
+  import type { CalcyStore } from "./store";
   import { v1 as uuidv1 } from "uuid";
   import type {  Board, BoardProps } from "./board";
   import EditBoardDialog from "./EditBoardDialog.svelte";
@@ -95,7 +95,7 @@
   }
 
   const { getStore } :any = getContext("store");
-  let store: GriffyStore = getStore();
+  let store: CalcyStore = getStore();
   
   export let activeBoard: Board
   export let standAlone = false

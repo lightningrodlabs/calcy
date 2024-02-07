@@ -1,7 +1,7 @@
 <script lang="ts">
   import "@shoelace-style/shoelace/dist/components/skeleton/skeleton.js";
   import { createEventDispatcher, getContext } from "svelte";
-  import type { GriffyStore } from "./store";
+  import type { CalcyStore } from "./store";
   import { hrlB64WithContextToRaw } from "./util";
   import type { HrlB64WithContext } from "@lightningrodlabs/we-applet";
   import SvgIcon from "./SvgIcon.svelte";
@@ -12,7 +12,7 @@
   export let allowDelete = true
 
   const { getStore } :any = getContext("store");
-  let store: GriffyStore = getStore();
+  let store: CalcyStore = getStore();
   
 </script>
 <div class="attachments-list">

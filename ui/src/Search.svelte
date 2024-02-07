@@ -12,14 +12,14 @@
     import type { v1 as uuidv1 } from "uuid";
     import { toPromise } from "@holochain-open-dev/stores";
     import type { BoardState, BoardStateData } from "./board";
-    import type { GriffyStore } from "./store";
+    import type { CalcyStore } from "./store";
 
 
     let foundBoards: Array<BoardStateData> = []
     $: foundBoards
 
     const { getStore } :any = getContext('store');
-    const store:GriffyStore = getStore();
+    const store:CalcyStore = getStore();
     $: activeHashB64 = store.boardList.activeBoardHashB64;
 
     const selectBoard = (hash: EntryHash) => {

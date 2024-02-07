@@ -2,12 +2,12 @@
   import { encodeHashToBase64, type AgentPubKey } from "@holochain/client";
   import "@holochain-open-dev/profiles/dist/elements/agent-avatar.js";
   import { getContext } from "svelte";
-  import type { GriffyStore } from "./store";
+  import type { CalcyStore } from "./store";
   import SvgIcon from "./SvgIcon.svelte";
   import "@shoelace-style/shoelace/dist/components/skeleton/skeleton.js";
 
   const { getStore } :any = getContext("store");
-  let store: GriffyStore = getStore();
+  let store: CalcyStore = getStore();
 
   export let agentPubKey: AgentPubKey
   export let size = 32

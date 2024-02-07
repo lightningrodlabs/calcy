@@ -1,7 +1,7 @@
 <script lang="ts">
     import "@shoelace-style/shoelace/dist/components/skeleton/skeleton.js";
     import { createEventDispatcher, getContext } from "svelte";
-    import type { GriffyStore } from "./store";
+    import type { CalcyStore } from "./store";
     import type { Board } from "./board";
     import SvgIcon from "./SvgIcon.svelte";
     import type { AppletInfo, AttachmentType } from "@lightningrodlabs/we-applet";
@@ -13,7 +13,7 @@
   
     const dispatch = createEventDispatcher()
     const { getStore } :any = getContext("store");
-    let store: GriffyStore = getStore();
+    let store: CalcyStore = getStore();
   
     type AppletTypes = {
       appletName: string,

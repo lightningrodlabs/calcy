@@ -1,7 +1,7 @@
 <script lang="ts">
     import Toolbar from './Toolbar.svelte'
-    import GriffyPane from './GriffyPane.svelte'
-    import { GriffyStore } from './store'
+    import CalcyPane from './CalcyPane.svelte'
+    import { CalcyStore } from './store'
     import { setContext } from 'svelte';
     import type { AppAgentClient } from '@holochain/client';
     import type { SynStore } from '@holochain-syn/store';
@@ -14,7 +14,7 @@
     export let weClient : WeClient
     export let profilesStore : ProfilesStore
 
-    let store: GriffyStore = new GriffyStore (
+    let store: CalcyStore = new CalcyStore (
       weClient,
       profilesStore,
       client,
@@ -71,7 +71,7 @@
 
 
         {#if $activeBoardHash !== undefined}
-          <GriffyPane activeBoard={$activeBoard}/>
+          <CalcyPane activeBoard={$activeBoard}/>
         {/if}
         </div>
         </div>

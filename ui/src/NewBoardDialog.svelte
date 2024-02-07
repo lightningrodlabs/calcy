@@ -1,6 +1,6 @@
 <script lang="ts">
     import BoardEditor from './BoardEditor.svelte';
-    import type { GriffyStore } from './store';
+    import type { CalcyStore } from './store';
     import { getContext } from 'svelte';
     import type { BoardProps } from './board';
     import '@shoelace-style/shoelace/dist/components/dialog/dialog.js';
@@ -10,7 +10,7 @@
     
     const { getStore } :any = getContext('store');
 
-    const store:GriffyStore = getStore();
+    const store:CalcyStore = getStore();
 
     const addBoard = async (name: string, props: BoardProps) => {
         // @ts-ignore

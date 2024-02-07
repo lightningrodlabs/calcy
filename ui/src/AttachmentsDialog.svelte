@@ -3,7 +3,7 @@
   import { cloneDeep } from "lodash";
   import type { Board } from "./board";
   import { getContext } from "svelte";
-  import type { GriffyStore } from "./store";
+  import type { CalcyStore } from "./store";
   import { hrlWithContextToB64} from "./util";
   import '@shoelace-style/shoelace/dist/components/button/button.js';
   import '@shoelace-style/shoelace/dist/components/dialog/dialog.js';
@@ -12,7 +12,7 @@
   import SvgIcon from "./SvgIcon.svelte";
 
   const { getStore } :any = getContext("store");
-  let store: GriffyStore = getStore();
+  let store: CalcyStore = getStore();
   //let card: Card | undefined
   let attachments: Array<HrlB64WithContext> = []
  
