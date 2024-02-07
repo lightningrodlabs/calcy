@@ -4,6 +4,7 @@ import { v1 as uuidv1 } from "uuid";
 import { type AgentPubKey, type EntryHash, type EntryHashB64, encodeHashToBase64, type AgentPubKeyB64, type Timestamp } from "@holochain/client";
 import { BoardType } from "./boardList";
 import type { HrlB64WithContext } from "@lightningrodlabs/we-applet";
+import type { IWorkbookData } from '@univerjs/core';
 
 export type BoardProps = {
   bgUrl: string,
@@ -16,6 +17,7 @@ export interface BoardState {
   count: number;
   name: string;
   props: BoardProps;
+  spreadsheet: IWorkbookData;
   boundTo: Array<HrlB64WithContext>
 }
   
@@ -24,6 +26,10 @@ export interface BoardState {
         type: "set-name";
         name: string;
       }
+    | {
+        type: "set-spreadsheet";
+        spreadsheet: IWorkbookData;
+    }
     | {
         type: "set-state";
         state: BoardState;
@@ -59,11 +65,15 @@ export interface BoardState {
       switch (delta.type) {
         case "set-state":
           if (delta.state.name !== undefined) state.name = delta.state.name
+          if (delta.state.spreadSheet !== undefined) state.spreadSheet = delta.state.spreadSheet
           if (delta.state.props !== undefined) state.props = delta.state.props
           if (delta.state.boundTo !== undefined) state.boundTo = delta.state.boundTo
           if (delta.state.count !== undefined) {
             state.count = delta.state.count
           }
+          break;
+        case "set-spreadsheet":
+          state.spreadsheet = delta.spreadsheet
           break;
         case "set-name":
           state.name = delta.name

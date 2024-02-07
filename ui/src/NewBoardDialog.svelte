@@ -26,7 +26,7 @@
     let boardEditor
 
 </script>
-<sl-dialog bind:this={dialog} label="New Board"
+<sl-dialog bind:this={dialog} label="New Spreadsheet"
     on:sl-initial-focus={(e)=>{
         boardEditor.initialFocus()
         e.preventDefault()

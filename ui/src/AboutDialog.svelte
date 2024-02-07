@@ -103,7 +103,7 @@
         <div class="spinning" ><SvgIcon icon=faSpinner  color="#fff"></SvgIcon></div>
     {:else if $allBoards.status == "complete"}
         <sl-dropdown skidding=15>
-            <sl-button slot="trigger" caret><SvgIcon icon=faClone size=20px style="margin-right: 10px"/><span>New Board From </span></sl-button>
+            <sl-button slot="trigger" caret><SvgIcon icon=faClone size=20px style="margin-right: 10px"/><span>New Spreadsheet From </span></sl-button>
             <sl-menu>
                 {#each Array.from($allBoards.value.entries()) as [key,board]}
                     <sl-menu-item on:click={()=>{

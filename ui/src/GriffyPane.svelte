@@ -16,25 +16,132 @@
   import AttachmentsList from './AttachmentsList.svelte';
   import AttachmentsDialog from "./AttachmentsDialog.svelte"
   import  {Workbook}  from "@fortune-sheet/react";
-  import ReactAdapter from "./ReactAdapter.svelte";
-  import "@fortune-sheet/react/dist/index.css"
+  // import ReactAdapter from "./ReactAdapter.svelte";
+  // import "@fortune-sheet/react/dist/index.css"
+  import type { IWorkbookData } from '@univerjs/core';
+  // import { pause } from '@holochain/tryorama';
 
-  onMount(async () => {
-	});
+  import "@univerjs/design/lib/index.css";
+  import "@univerjs/ui/lib/index.css";
+  import "@univerjs/sheets-ui/lib/index.css";
+  import "@univerjs/sheets-formula/lib/index.css";
 
+  import { LocaleType } from '@univerjs/core';
+  import { enUS as UniverDesignEnUS } from '@univerjs/design';
+  // import { enUS as UniverDocsUIEnUS } from '@univerjs/docs-ui';
+  import { enUS as UniverSheetsEnUS } from '@univerjs/sheets';
+  import { enUS as UniverSheetsUIEnUS } from '@univerjs/sheets-ui';
+  import { enUS as UniverUiEnUS } from '@univerjs/ui';
+
+  import {Univer } from "@univerjs/core";
+  import { defaultTheme } from "@univerjs/design";
+  import { UniverDocsPlugin } from "@univerjs/docs";
+  import { UniverFormulaEnginePlugin } from "@univerjs/engine-formula";
+  import { UniverRenderEnginePlugin } from "@univerjs/engine-render";
+  import { UniverSheetsPlugin } from "@univerjs/sheets";
+  import { UniverSheetsFormulaPlugin } from "@univerjs/sheets-formula";
+  import { UniverSheetsUIPlugin } from "@univerjs/sheets-ui";
+  import { UniverUIPlugin } from "@univerjs/ui";
+    import { spread } from "svelte/internal";
+
+  let sheet;
+
+  const univer = new Univer({
+    theme: defaultTheme,
+    locale: LocaleType.EN_US,
+    locales: {
+      [LocaleType.EN_US]: {
+        ...UniverSheetsEnUS,
+        ...UniverSheetsUIEnUS,
+        ...UniverUiEnUS,
+        ...UniverDesignEnUS,
+      },
+    }
+  });
+
+  const maybeSave = async () =>{
+    // await pause(10)
+    const previousVersion = JSON.stringify(previousState["spreadsheet"]["sheets"])
+    const newVersion = JSON.stringify($state["spreadsheet"]["sheets"])
+    console.log(previousVersion)
+    console.log("-------------")
+    console.log(newVersion)
+    if (previousVersion !== newVersion) {
+      console.log("unsaved changes")
+      saveSheet()
+    }
+  }
+
+  function checkKey(e: any) {
+    // if (e.key === "Escape" && !e.shiftKey) {
+    //   e.preventDefault();
+    //   open = false;
+    // }
+    console.log("hi")
+    maybeSave()
+  }
 
   const { getStore } :any = getContext("store");
   let store: GriffyStore = getStore();
-
+  
   export let activeBoard: Board
   export let standAlone = false
-
+  
   $: uiProps = store.uiProps
   $: participants = activeBoard.participants()
   $: activeHashB64 = store.boardList.activeBoardHashB64;
   $: state = activeBoard.readableState()
+  let previousState = {};
  
+  onMount(async () => {
+    // core plugins
+    univer.registerPlugin(UniverRenderEnginePlugin);
+    univer.registerPlugin(UniverFormulaEnginePlugin);
+    univer.registerPlugin(UniverUIPlugin, {
+      container: "spreadsheet",
+      header: true,
+      toolbar: true,
+      footer: true,
+    });
 
+    // doc plugins
+    univer.registerPlugin(UniverDocsPlugin, {
+      hasScroll: false,
+    });
+
+    // sheet plugins
+    univer.registerPlugin(UniverSheetsPlugin);
+    univer.registerPlugin(UniverSheetsUIPlugin);
+    univer.registerPlugin(UniverSheetsFormulaPlugin);
+
+    const savedBoard = await activeBoard.readableState()
+    console.log($state.spreadsheet)
+    sheet = univer.createUniverSheet($state.spreadsheet);
+
+    previousState = cloneDeep($state)
+    console.log("previous state set", previousState)
+
+    window.addEventListener("keydown", checkKey);
+	});
+
+  const saveSheet = async () => {
+    console.log("saving sheet")
+    const sheetData = sheet.save();
+    console.log("sheetData", sheetData.sheets["sheet-01"])
+    // state.spreadsheet = sheetData;
+    // change state update spreadsheet
+    
+    let changes = [{
+      type: "set-spreadsheet",
+      spreadsheet: sheetData
+    }]
+    activeBoard.requestChanges(changes)
+    previousState = cloneDeep($state)
+    console.log("previous state set", previousState)
+
+    // const l = await activeBoard.readableState()
+    // console.log("active board", l)
+  }
 
   const closeBoard = async () => {
     await store.closeActiveBoard(false);
@@ -67,7 +174,7 @@
 
 </script>
 <div class="board" >
-
+  <!-- {JSON.stringify($state.spreadsheet.sheets["sheet-01"])} -->
     <EditBoardDialog bind:this={editBoardDialog}></EditBoardDialog>
   <div class="top-bar">
     <div class="left-items">
@@ -136,15 +243,20 @@
     </div>
   </div>
   {#if $state}
-   <div style="height:100%">
-    <ReactAdapter
-  el={Workbook}
-  data={[{ name: "Sheet1", rows:20}]} 
-/></div>
+  <!-- <button on:click={saveSheet}>Save</button> -->
+   <div id="spreadsheet" style="height:100%; position: relative; top: -32px;" on:click={maybeSave}>
+      <!-- <ReactAdapter
+        el={Workbook}
+        data={[{ name: "Sheet1", rows:20}]} 
+      /> -->
+    </div>
   {/if}
   <div class="bottom-fade"></div>
 </div>
 <style>
+  .univer-menubar {
+    height: 0px !important;
+  }
   
   .board {
     display: flex;

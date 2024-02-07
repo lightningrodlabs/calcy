@@ -58,11 +58,11 @@
         "description": "Let's do it!",
         "icon": {
           "type": "filesystem",
-          "path": "/home/eric/code/metacurrency/holochain/griffy/we_dev/griffy_icon.svg"
+          "path": "/home/leo/hApps/calcy/we_dev/griffy_icon.svg"
         },
         "source": {
           "type": "localhost",
-          "happPath": "/home/eric/code/metacurrency/holochain/griffy/workdir/griffy.happ",
+          "happPath": "/home/leo/hApps/calcy/workdir/griffy.happ",
           "uiPort": 8888
         }
       },
@@ -72,7 +72,7 @@
         "description": "Real-time games based on syn",
         "icon": {
           "type": "filesystem",
-          "path": "/home/eric/code/metacurrency/holochain/gamez/we_dev/gamez_icon.svg"
+          "path": "/home/leo/hApps/gamez/we_dev/gamez_icon.svg"
         },
         "source": {
           "type": "https",

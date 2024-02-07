@@ -8,6 +8,22 @@ import { cloneDeep } from "lodash";
 import { Board, type BoardDelta, type BoardState } from "./board";
 import { hashEqual } from "./util";
 
+import { LocaleType, type IWorkbookData } from '@univerjs/core';
+import { enUS as UniverDesignEnUS } from '@univerjs/design';
+// import { enUS as UniverDocsUIEnUS } from '@univerjs/docs-ui';
+import { enUS as UniverSheetsEnUS } from '@univerjs/sheets';
+import { enUS as UniverSheetsUIEnUS } from '@univerjs/sheets-ui';
+import { enUS as UniverUiEnUS } from '@univerjs/ui';
+import {Univer } from "@univerjs/core";
+import { defaultTheme } from "@univerjs/design";
+import { UniverDocsPlugin } from "@univerjs/docs";
+import { UniverFormulaEnginePlugin } from "@univerjs/engine-formula";
+import { UniverRenderEnginePlugin } from "@univerjs/engine-render";
+import { UniverSheetsPlugin } from "@univerjs/sheets";
+import { UniverSheetsFormulaPlugin } from "@univerjs/sheets-formula";
+import { UniverSheetsUIPlugin } from "@univerjs/sheets-ui";
+import { UniverUIPlugin } from "@univerjs/ui";
+
 export enum BoardType {
     active = "active",
     archived = "archived"
@@ -191,6 +207,45 @@ export class BoardList {
         if (!options.name) {
             options.name = "untitled"
         }
+        
+        const univer = new Univer({
+          theme: defaultTheme,
+          locale: LocaleType.EN_US,
+          locales: {
+            [LocaleType.EN_US]: {
+              ...UniverSheetsEnUS,
+              ...UniverSheetsUIEnUS,
+              ...UniverUiEnUS,
+              ...UniverDesignEnUS,
+            },
+          }
+        });
+      
+        // core plugins
+        univer.registerPlugin(UniverRenderEnginePlugin);
+        univer.registerPlugin(UniverFormulaEnginePlugin);
+        univer.registerPlugin(UniverUIPlugin, {
+            container: "spreadsheet",
+            header: true,
+            toolbar: true,
+            footer: true,
+        });
+    
+        // doc plugins
+        univer.registerPlugin(UniverDocsPlugin, {
+            hasScroll: false,
+        });
+    
+        // sheet plugins
+        univer.registerPlugin(UniverSheetsPlugin);
+        univer.registerPlugin(UniverSheetsUIPlugin);
+        univer.registerPlugin(UniverSheetsFormulaPlugin);
+
+        let newSheet = univer.createUniverSheet({});
+
+        options.spreadsheet = newSheet.save()
+
+        console.log("options", options)
         const board = await Board.Create(this.synStore, options)
         return board
     }
