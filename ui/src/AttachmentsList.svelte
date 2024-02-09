@@ -5,6 +5,7 @@
   import { hrlB64WithContextToRaw } from "./util";
   import type { HrlB64WithContext } from "@lightningrodlabs/we-applet";
   import SvgIcon from "./SvgIcon.svelte";
+  import { hrlToString } from "@holochain-open-dev/utils";
 
   const dispatch = createEventDispatcher()
 
@@ -17,35 +18,39 @@
 </script>
 <div class="attachments-list">
   {#each attachments as attachment, index}
+    {@const hrlWithContext = hrlB64WithContextToRaw(attachment)}
     <div 
       class:attachment-item-with-delete={allowDelete}
       class:attachment-item={!allowDelete}
     >
-      {#await store.weClient.attachableInfo(hrlB64WithContextToRaw(attachment))}
-        <sl-button size="small" loading></sl-button>
+      {#await store.weClient.attachableInfo(hrlWithContext)}
+        <div style="cursor:pointer; padding: 0 5px 0 5px; border: dashed 1px;margin-right:5px" title={`${hrlToString(hrlWithContext.hrl)}?${JSON.stringify(hrlWithContext.context)}`}> ?...</div>
       {:then { attachableInfo }}
         <sl-button  size="small"
-          on:click={(e)=>{
+          on:click={ async (e)=>{
               e.stopPropagation()
-              const hrlWithContext = hrlB64WithContextToRaw(attachment)
-              store.weClient.openHrl(hrlWithContext)
+              try {
+                await store.weClient.openHrl(hrlWithContext)
+              } catch(e) {
+                alert(`Error opening link: ${e}`)
+              }
             }}
           style="display:flex;flex-direction:row;margin-right:5px"><sl-icon src={attachableInfo.icon_src} slot="prefix"></sl-icon>
           {attachableInfo.name}
         </sl-button> 
-        {#if allowDelete}
-          <sl-button size="small"
-            on:click={()=>{
-              dispatch("remove-attachment",index)
-            }}
-          >
-            <SvgIcon icon=faTrash size=12 />
-          </sl-button>
-        {/if}
       {:catch error}
         Oops. something's wrong.
       {/await}
-    </div>
+      {#if allowDelete}
+        <sl-button size="small"
+          on:click={()=>{
+            dispatch("remove-attachment",index)
+          }}
+        >
+          <SvgIcon icon=faTrash size=12 />
+        </sl-button>
+      {/if}
+</div>
   {/each}
 </div>
 <style>

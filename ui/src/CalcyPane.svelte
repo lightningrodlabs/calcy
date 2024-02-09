@@ -2,7 +2,7 @@
   import { getContext, onMount } from "svelte";
   import type { CalcyStore } from "./store";
   import { v1 as uuidv1 } from "uuid";
-  import type {  Board, BoardProps } from "./board";
+  import type {  Board, BoardDelta, BoardProps } from "./board";
   import EditBoardDialog from "./EditBoardDialog.svelte";
   import Avatar from "./Avatar.svelte";
   import { decodeHashFromBase64, type Timestamp } from "@holochain/client";
@@ -45,6 +45,7 @@
   // import FUniver from "@univerjs/facade";
 
   import { spread } from "svelte/internal";
+  import type { HrlWithContext } from "@lightningrodlabs/we-applet";
 
   const delay = ms => new Promise(res => setTimeout(res, ms));
   let sheet;
@@ -198,7 +199,7 @@
     // state.spreadsheet = sheetData;
     // change state update spreadsheet
     
-    let changes = [{
+    let changes: BoardDelta[] = [{
       type: "set-spreadsheet",
       spreadsheet: sheetData
     }]
@@ -251,6 +252,11 @@
 
     funiver = FUniver.newAPI(univer);
 	});
+  
+  const copyHrlToClipboard = () => {
+    const attachment: HrlWithContext = { hrl: [store.dnaHash, activeBoard.hash], context: "" }
+    store.weClient?.hrlToClipboard(attachment)
+  }
 
 </script>
 <div class="board" >
@@ -292,6 +298,9 @@
             </div>
           {/if}
           <div style="margin-left:10px; margin-top:2px;display:flex">
+            <button title="Add Board to Pocket" class="attachment-button" style="margin-right:10px" on:click={()=>copyHrlToClipboard()} >          
+              <SvgIcon icon="addToPocket" size="20px"/>
+            </button>
             <button class="attachment-button" style="margin-right:10px" on:click={()=>attachmentsDialog.open(undefined)} >          
               <SvgIcon icon="link" size="16px"/>
             </button>
@@ -505,6 +514,9 @@
   }
   :global(.attachment-button:hover) {
     transform: scale(1.25);
+  }
+  .idle {
+    opacity: 0.5;
   }
 
 </style>
