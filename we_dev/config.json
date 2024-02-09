@@ -62,7 +62,7 @@
         },
         "source": {
           "type": "localhost",
-          "happPath": "/home/eric/code/metacurrency/holochain/calcy/workdir/calcy.happ",
+          "happPath": "/home/leo/hApps/calcy/workdir/calcy.happ",
           "uiPort": 8888
         }
       },
