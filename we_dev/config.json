@@ -58,7 +58,7 @@
         "description": "Let's do it!",
         "icon": {
           "type": "filesystem",
-          "path": "/home/eric/code/metacurrency/holochain/calcy/we_dev/calcy.png"
+          "path": "/home/leo/hApps/calcy/we_dev/calcy.png"
         },
         "source": {
           "type": "localhost",
