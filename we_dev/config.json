@@ -71,8 +71,8 @@
         "subtitle": "games!",
         "description": "Real-time games based on syn",
         "icon": {
-          "type": "filesystem",
-          "path": "/home/leo/hApps/gamez/we_dev/gamez_icon.svg"
+          "type": "https",
+          "url": "https://raw.githubusercontent.com/holochain-apps/gamez/main/we_dev/gamez_icon.svg"
         },
         "source": {
           "type": "https",
