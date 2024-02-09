@@ -41,10 +41,14 @@
   import { UniverSheetsFormulaPlugin } from "@univerjs/sheets-formula";
   import { UniverSheetsUIPlugin } from "@univerjs/sheets-ui";
   import { UniverUIPlugin } from "@univerjs/ui";
+  import { FUniver } from "@univerjs/facade";
+  // import FUniver from "@univerjs/facade";
+
   import { spread } from "svelte/internal";
 
   const delay = ms => new Promise(res => setTimeout(res, ms));
   let sheet;
+  let funiver;
 
   const univer = new Univer({
     theme: defaultTheme,
@@ -59,6 +63,26 @@
     }
   });
 
+  // core plugins
+  univer.registerPlugin(UniverRenderEnginePlugin);
+  univer.registerPlugin(UniverFormulaEnginePlugin);
+  univer.registerPlugin(UniverUIPlugin, {
+    container: "spreadsheet",
+    header: true,
+    toolbar: true,
+    footer: true,
+  });
+
+  // doc plugins
+  univer.registerPlugin(UniverDocsPlugin, {
+    hasScroll: false,
+  });
+
+  // sheet plugins
+  univer.registerPlugin(UniverSheetsPlugin);
+  univer.registerPlugin(UniverSheetsUIPlugin);
+  univer.registerPlugin(UniverSheetsFormulaPlugin);
+
   const maybeSave = async () =>{
     await delay(100)
     const previousVersion = JSON.stringify(previousState)
@@ -70,6 +94,52 @@
       // console.log("unsaved changes")
       saveSheet()
     // }
+  }
+
+  const updateSheet = async () => {
+    // await delay(100)
+    console.log("updating sheet")
+    const activeSheet = funiver.getActiveWorkbook().getActiveSheet();
+    const spreadsheet = $state.spreadsheet.sheets
+    // console.log("spreadsheet", spreadsheet)
+    const localState = sheet.save().sheets;
+    // console.log("localState", localState)
+
+    // for each sheet in spreadsheet
+    for (const sheet in spreadsheet) {
+      // console.log("sheet", sheet)
+      let fullRange = activeSheet.getRange(1, 1, 100, 100);
+      let replacementRange = spreadsheet[sheet].cellData;
+      // console.log("fullRange", fullRange)
+      // console.log("replacementRange", replacementRange)
+
+      // console.log("compromiseValue", localState[sheet].cellData)
+      let compromiseValue = {...localState[sheet].cellData}
+      // for each cell in sheet
+      // console.log("sheet", spreadsheet[sheet].cellData)
+      for (const row in spreadsheet[sheet].cellData) {
+        // console.log("row", row)
+        for (const col in spreadsheet[sheet].cellData[row]) {
+          // console.log("col", col, row, spreadsheet[sheet].cellData[row][col])
+          const previousValue = localState[sheet].cellData[row][col]
+          const newValue = spreadsheet[sheet].cellData[row][col]
+          // check if object values in previousValue differ from newValue
+          if (!isEqual(previousValue, newValue)) {
+            if (compromiseValue[row] === undefined) {
+              compromiseValue[row] = {}
+            }
+            if (compromiseValue[row][col] === undefined) {
+              compromiseValue[row][col] = {}
+            }
+            compromiseValue[row][col] = newValue
+          } //else {
+            // console.log("no update", previousValue.v, newValue.v)
+          // }
+        }
+      }
+
+      fullRange.setValues(compromiseValue);
+    }
   }
 
   function checkKey(e: any) {
@@ -89,58 +159,36 @@
       ].includes(e.key) && !e.shiftKey) {
     //   e.preventDefault();
     //   open = false;
-        console.log("hi")
         maybeSave()
     }
   }
 
   const { getStore } :any = getContext("store");
   let store: CalcyStore = getStore();
-  
+  // const univerAPI = FUniver.newAPI(univer);
+
   export let activeBoard: Board
   export let standAlone = false
   
+  let previousState = {};
   $: uiProps = store.uiProps
   $: participants = activeBoard.participants()
   $: activeHashB64 = store.boardList.activeBoardHashB64;
   $: state = activeBoard.readableState()
-  let previousState = {};
- 
-  onMount(async () => {
-    // core plugins
-    univer.registerPlugin(UniverRenderEnginePlugin);
-    univer.registerPlugin(UniverFormulaEnginePlugin);
-    univer.registerPlugin(UniverUIPlugin, {
-      container: "spreadsheet",
-      header: true,
-      toolbar: true,
-      footer: true,
-    });
-
-    // doc plugins
-    univer.registerPlugin(UniverDocsPlugin, {
-      hasScroll: false,
-    });
-
-    // sheet plugins
-    univer.registerPlugin(UniverSheetsPlugin);
-    univer.registerPlugin(UniverSheetsUIPlugin);
-    univer.registerPlugin(UniverSheetsFormulaPlugin);
-
-    const savedBoard = await activeBoard.readableState()
-    console.log($state.spreadsheet)
-    sheet = univer.createUniverSheet($state.spreadsheet);
-
-    previousState = cloneDeep($state)
-    console.log("previous state set", previousState)
-
-    window.addEventListener("keydown", checkKey);
-	});
+  $: if ($state) {
+    console.log("state change", $state)
+    updateSheet()
+    // const s = sheet.getActiveSheet()
+    // console.log(sheet.activeSheet())
+    // const activeSheet = univerAPI.getActiveWorkbook().getActiveSheet();
+    // console.log("activeSheet", activeSheet)
+  }
 
   const saveSheet = async () => {
     console.log("saving sheet")
     const sheetData = sheet.save();
-    console.log("sheetData", sheetData.sheets["sheet-01"])
+    // console.log("sheetData", sheetData.sheets["sheet-01"])
+    // console.log("sheetData2", sheetData.sheets["sheet-02"])
     // state.spreadsheet = sheetData;
     // change state update spreadsheet
     
@@ -150,7 +198,7 @@
     }]
     activeBoard.requestChanges(changes)
     previousState = {...cloneDeep($state)}
-    console.log("previous state set", previousState)
+    // console.log("previous state set", previousState)
 
     // const l = await activeBoard.readableState()
     // console.log("active board", l)
@@ -184,6 +232,19 @@
     newProps.attachments.splice(idx,1)
     activeBoard.requestChanges([{type: 'set-props', props : newProps }])
   }
+
+  onMount(async () => {
+    console.log("previous state set", previousState)
+    const savedBoard = await activeBoard.readableState()
+    console.log($state.spreadsheet)
+    sheet = univer.createUniverSheet($state.spreadsheet);
+    // sheet = univer.createUniverDoc($state.spreadsheet);
+
+    previousState = cloneDeep($state)
+    window.addEventListener("keydown", checkKey);
+
+    funiver = FUniver.newAPI(univer);
+	});
 
 </script>
 <div class="board" >

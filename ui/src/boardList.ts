@@ -245,7 +245,7 @@ export class BoardList {
 
         options.spreadsheet = newSheet.save()
 
-        console.log("options", options)
+        // console.log("options", options)
         const board = await Board.Create(this.synStore, options)
         return board
     }

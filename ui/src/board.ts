@@ -167,7 +167,7 @@ export class Board {
   }
 
   requestChanges(deltas: Array<BoardDelta>) {
-      console.log("REQUESTING BOARD CHANGES: ", deltas)
+      // console.log("REQUESTING BOARD CHANGES: ", deltas)
       this.session.change((state,_eph)=>{
         for (const delta of deltas) {
           boardGrammar.applyDelta(delta, state,_eph, undefined)
