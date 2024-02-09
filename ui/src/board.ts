@@ -14,7 +14,6 @@ export type BoardProps = {
 export type BoardEphemeralState = { [key: string]: string };
 
 export interface BoardState {
-  count: number;
   name: string;
   props: BoardProps;
   spreadsheet: IWorkbookData;
@@ -37,9 +36,6 @@ export interface BoardState {
     | {
         type: "set-props";
         props: BoardProps;
-      }
-    | {
-        type: "increment";
       };
 
 
@@ -47,9 +43,9 @@ export interface BoardState {
     initialState(init: Partial<BoardState>|undefined = undefined)  {
       const state: BoardState = {
         name: "untitled",
-        count: 0,
         props: {bgUrl:"", attachments:[]},
         boundTo: [],
+        spreadsheet: null
       }
       if (init) {
         Object.assign(state, init);
@@ -65,12 +61,9 @@ export interface BoardState {
       switch (delta.type) {
         case "set-state":
           if (delta.state.name !== undefined) state.name = delta.state.name
-          if (delta.state.spreadSheet !== undefined) state.spreadSheet = delta.state.spreadSheet
+          if (delta.state.spreadsheet !== undefined) state.spreadsheet = delta.state.spreadsheet
           if (delta.state.props !== undefined) state.props = delta.state.props
           if (delta.state.boundTo !== undefined) state.boundTo = delta.state.boundTo
-          if (delta.state.count !== undefined) {
-            state.count = delta.state.count
-          }
           break;
         case "set-spreadsheet":
           state.spreadsheet = delta.spreadsheet
@@ -80,10 +73,6 @@ export interface BoardState {
           break;
         case "set-props":
           state.props = delta.props
-          break;
-
-        case "increment":
-          state.count = state.count+1
           break;
       }
     },
