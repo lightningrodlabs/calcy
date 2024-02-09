@@ -10,7 +10,7 @@ import type { AppAgentClient, RoleName, ZomeName } from '@holochain/client';
 const ROLE_NAME = "calcy"
 const ZOME_NAME = "syn"
 
-const BOARD_ICON_SRC = `data:image/svg+xml;utf8,
+const SHEET_ICON_SRC = `data:image/svg+xml;utf8,
 <svg fill="black" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
 	 width="800px" height="800px" viewBox="0 0 482.81 482.81"
 	 xml:space="preserve">
@@ -40,7 +40,7 @@ export const appletServices: AppletServices = {
     ) => ({
       board: {
         label: "Board",
-        icon_src: BOARD_ICON_SRC,
+        icon_src: SHEET_ICON_SRC,
         async create(attachToHrlWithContext: HrlWithContext) {
           const synStore = new SynStore(new SynClient(appletClient, ROLE_NAME));
           const board = await Board.Create(synStore, {boundTo:[hrlWithContextToB64(attachToHrlWithContext)]})
@@ -78,7 +78,7 @@ export const appletServices: AppletServices = {
 
 
         return {
-          icon_src: BOARD_ICON_SRC,
+          icon_src: SHEET_ICON_SRC,
           name: latestSnapshot.name,
         };
       } else {
