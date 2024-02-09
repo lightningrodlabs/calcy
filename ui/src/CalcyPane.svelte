@@ -104,12 +104,13 @@
     // console.log("spreadsheet", spreadsheet)
     const localState = sheet.save().sheets;
     // console.log("localState", localState)
+    let changed = false;
 
     // for each sheet in spreadsheet
     for (const sheet in spreadsheet) {
       // console.log("sheet", sheet)
       let fullRange = activeSheet.getRange(1, 1, 100, 100);
-      let replacementRange = spreadsheet[sheet].cellData;
+      // let replacementRange = spreadsheet[sheet].cellData;
       // console.log("fullRange", fullRange)
       // console.log("replacementRange", replacementRange)
 
@@ -118,27 +119,32 @@
       // for each cell in sheet
       // console.log("sheet", spreadsheet[sheet].cellData)
       for (const row in spreadsheet[sheet].cellData) {
+        if (compromiseValue[row] === undefined) {
+          compromiseValue[row] = {}
+        }
         // console.log("row", row)
         for (const col in spreadsheet[sheet].cellData[row]) {
+          if (compromiseValue[row][col] === undefined) {
+            compromiseValue[row][col] = {}
+          }
           // console.log("col", col, row, spreadsheet[sheet].cellData[row][col])
-          const previousValue = localState[sheet].cellData[row][col]
+          const previousValue = compromiseValue[row][col]
           const newValue = spreadsheet[sheet].cellData[row][col]
           // check if object values in previousValue differ from newValue
           if (!isEqual(previousValue, newValue)) {
-            if (compromiseValue[row] === undefined) {
-              compromiseValue[row] = {}
-            }
-            if (compromiseValue[row][col] === undefined) {
-              compromiseValue[row][col] = {}
-            }
+            // let microRange = activeSheet.getRange(row, col, 3, 2);
+            // microRange.setValue(newValue)
             compromiseValue[row][col] = newValue
+            changed = true;
           } //else {
             // console.log("no update", previousValue.v, newValue.v)
           // }
         }
       }
 
-      fullRange.setValues(compromiseValue);
+      if (changed) {
+        fullRange.setValues(compromiseValue);
+      }
     }
   }
 
@@ -318,7 +324,8 @@
   </div>
   {#if $state}
   <!-- <button on:click={saveSheet}>Save</button> -->
-   <div id="spreadsheet" style="height:100%; position: relative; top: -32px;" on:click={maybeSave}>
+  <div id="spreadsheet" style="height:100%; position: relative; top: -32px;">
+   <!-- <div id="spreadsheet" style="height:100%; position: relative; top: -32px;" on:click={maybeSave}> -->
       <!-- <ReactAdapter
         el={Workbook}
         data={[{ name: "Sheet1", rows:20}]} 
