@@ -58,11 +58,11 @@
         "description": "Let's do it!",
         "icon": {
           "type": "filesystem",
-          "path": "/home/leo/hApps/calcy/we_dev/calcy.png"
+          "path": "./we_dev/calcy.png"
         },
         "source": {
           "type": "localhost",
-          "happPath": "/home/leo/hApps/calcy/workdir/calcy.happ",
+          "happPath": "./workdir/calcy.happ",
           "uiPort": 8888
         }
       },
