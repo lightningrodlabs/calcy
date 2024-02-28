@@ -76,7 +76,7 @@
         },
         "source": {
           "type": "https",
-          "url": "https://github.com/holochain-apps/gamez/releases/download/v0.3.12/gamez.webhapp"
+          "url": "https://github.com/holochain-apps/gamez/releases/download/v0.3.100/gamez.webhapp"
         }
       },
       {
@@ -89,7 +89,7 @@
         },
         "source": {
           "type": "https",
-          "url": "https://github.com/lightningrodlabs/notebooks/releases/download/v0.0.14/notebooks.webhapp"
+          "url": "https://github.com/lightningrodlabs/notebooks/releases/download/v0.2.0/notebooks.webhapp"
         }
       }
     ]
