@@ -72,7 +72,7 @@
 </script>
 
 
-<sl-dialog label="Calcy!: UI v0.1.0 for DNA v0.1.0" bind:this={dialog} width={600} >
+<sl-dialog label="Calcy!: UI v0.2.0 for DNA v0.2.0" bind:this={dialog} width={600} >
     <div class="about">
         <p>Calcy! is a demonstration Holochain app built by Lightning Rod Labs.</p>
         <p> <b>Developers:</b>
