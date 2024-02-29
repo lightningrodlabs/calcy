@@ -58,7 +58,7 @@
         "description": "Let's do it!",
         "icon": {
           "type": "filesystem",
-          "path": "./we_dev/calcy.png"
+          "path": "./we_dev/calcy.svg"
         },
         "source": {
           "type": "localhost",
