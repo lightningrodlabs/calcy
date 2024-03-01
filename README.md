@@ -79,7 +79,7 @@ This repository is using these tools:
 
 [![License: CAL 1.0](https://img.shields.io/badge/License-CAL%201.0-blue.svg)](https://github.com/holochain/cryptographic-autonomy-license)
 
-Copyright (C) 2023, Holochain Foundation
+Copyright © 2023,2024 Holochain Foundation & Lightning Rod Labs.
 
 This program is free software: you can redistribute it and/or modify it under the terms of the license
 provided in the LICENSE file (MIT). This program is distributed in the hope that it will be useful,
