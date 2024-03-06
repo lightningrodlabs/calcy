@@ -24,23 +24,34 @@
   import "@univerjs/ui/lib/index.css";
   import "@univerjs/sheets-ui/lib/index.css";
   import "@univerjs/sheets-formula/lib/index.css";
+  import "@univerjs/sheets-numfmt/lib/index.css";
 
-  import { LocaleType } from '@univerjs/core';
   import { enUS as UniverDesignEnUS } from '@univerjs/design';
   // import { enUS as UniverDocsUIEnUS } from '@univerjs/docs-ui';
   import { enUS as UniverSheetsEnUS } from '@univerjs/sheets';
   import { enUS as UniverSheetsUIEnUS } from '@univerjs/sheets-ui';
   import { enUS as UniverUiEnUS } from '@univerjs/ui';
 
-  import {Univer } from "@univerjs/core";
+  import { Univer, LocaleType, LogLevel } from "@univerjs/core";
   import { defaultTheme } from "@univerjs/design";
   import { UniverDocsPlugin } from "@univerjs/docs";
+  import { UniverDocsUIPlugin } from "@univerjs/docs-ui";
   import { UniverFormulaEnginePlugin } from "@univerjs/engine-formula";
   import { UniverRenderEnginePlugin } from "@univerjs/engine-render";
   import { UniverSheetsPlugin } from "@univerjs/sheets";
   import { UniverSheetsFormulaPlugin } from "@univerjs/sheets-formula";
   import { UniverSheetsUIPlugin } from "@univerjs/sheets-ui";
   import { UniverUIPlugin } from "@univerjs/ui";
+
+  // import {Univer } from "@univerjs/core";
+  // import { defaultTheme } from "@univerjs/design";
+  // import { UniverDocsPlugin } from "@univerjs/docs";
+  // import { UniverFormulaEnginePlugin } from "@univerjs/engine-formula";
+  // import { UniverRenderEnginePlugin } from "@univerjs/engine-render";
+  // import { UniverSheetsPlugin } from "@univerjs/sheets";
+  // import { UniverSheetsFormulaPlugin } from "@univerjs/sheets-formula";
+  // import { UniverSheetsUIPlugin } from "@univerjs/sheets-ui";
+  // import { UniverUIPlugin } from "@univerjs/ui";
   import { FUniver } from "@univerjs/facade";
   // import FUniver from "@univerjs/facade";
 
@@ -54,6 +65,8 @@
   const univer = new Univer({
     theme: defaultTheme,
     locale: LocaleType.EN_US,
+    logLevel: LogLevel.VERBOSE,
+
     locales: {
       [LocaleType.EN_US]: {
         ...UniverSheetsEnUS,
@@ -63,6 +76,12 @@
       },
     }
   });
+
+  // doc plugins
+  univer.registerPlugin(UniverDocsPlugin, {
+    hasScroll: false,
+  });
+  univer.registerPlugin(UniverDocsUIPlugin);
 
   // core plugins
   univer.registerPlugin(UniverRenderEnginePlugin);
@@ -74,14 +93,12 @@
     footer: true,
   });
 
-  // doc plugins
-  univer.registerPlugin(UniverDocsPlugin, {
-    hasScroll: false,
-  });
 
   // sheet plugins
   univer.registerPlugin(UniverSheetsPlugin);
   univer.registerPlugin(UniverSheetsUIPlugin);
+
+  // sheet feature plugins
   univer.registerPlugin(UniverSheetsFormulaPlugin);
 
   const maybeSave = async () =>{
@@ -182,7 +199,7 @@
   $: participants = activeBoard.participants()
   $: activeHashB64 = store.boardList.activeBoardHashB64;
   $: state = activeBoard.readableState()
-  $: if ($state) {
+  $: if ($state && $funiver) {
     console.log("state change", $state)
     updateSheet()
     // const s = sheet.getActiveSheet()
@@ -245,12 +262,15 @@
     const savedBoard = await activeBoard.readableState()
     console.log($state.spreadsheet)
     sheet = univer.createUniverSheet($state.spreadsheet);
+    console.log(sheet)
     // sheet = univer.createUniverDoc($state.spreadsheet);
 
     previousState = cloneDeep($state)
+    console.log("clonedeep", previousState)
     window.addEventListener("keydown", checkKey);
 
     funiver = FUniver.newAPI(univer);
+    console.log("funiver", funiver)
 	});
   
   const copyHrlToClipboard = () => {
@@ -333,8 +353,8 @@
   </div>
   {#if $state}
   <!-- <button on:click={saveSheet}>Save</button> -->
-  <div id="spreadsheet" style="height:100%; position: relative; top: -32px;">
-   <!-- <div id="spreadsheet" style="height:100%; position: relative; top: -32px;" on:click={maybeSave}> -->
+  <!-- <div id="spreadsheet" style="height:100%; position: relative; top: -32px;"> -->
+   <div id="spreadsheet" style="height:100%; position: relative; top: -32px;" on:click={maybeSave}>
       <!-- <ReactAdapter
         el={Workbook}
         data={[{ name: "Sheet1", rows:20}]} 
