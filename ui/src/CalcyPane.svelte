@@ -15,7 +15,12 @@
   import { exportBoard } from "./export";
   import AttachmentsList from './AttachmentsList.svelte';
   import AttachmentsDialog from "./AttachmentsDialog.svelte"
-  import  {Workbook}  from "@fortune-sheet/react";
+
+  import { weaveUrlFromWal, type HrlWithContext } from "@lightningrodlabs/we-applet";
+  import { hrlB64WithContextToRaw } from "./util";
+  import '@lightningrodlabs/we-elements/dist/elements/wal-embed.js';
+
+  // import  {Workbook}  from "@fortune-sheet/react";
   // import ReactAdapter from "./ReactAdapter.svelte";
   // import "@fortune-sheet/react/dist/index.css"
   import type { IWorkbookData } from '@univerjs/core';
@@ -150,7 +155,7 @@
           const newValue = spreadsheet[sheet].cellData[row][col]
           // check if object values in previousValue differ from newValue
           if (!isEqual(previousValue, newValue)) {
-            // let microRange = activeSheet.getRange(row, col, 3, 2);
+            // let microRange = activeSheet.getRange(row, col, 1, 1);
             // microRange.setValue(newValue)
             compromiseValue[row][col] = newValue
             changed = true;

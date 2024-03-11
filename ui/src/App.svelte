@@ -12,6 +12,7 @@
   import "@holochain-open-dev/profiles/dist/elements/create-profile.js";
   import LogoIcon from "./icons/LogoIcon.svelte";
   import { appletServices } from './we';
+  import ControllerCreate from './ControllerCreate.svelte'
 
   const appId = import.meta.env.VITE_APP_ID ? import.meta.env.VITE_APP_ID : 'calcy'
   const roleName = 'calcy'
@@ -22,12 +23,14 @@
   let client: AppAgentWebsocket
   let weClient: WeClient
   let profilesStore : ProfilesStore|undefined = undefined
+  let createView
 
   let connected = false
 
   enum RenderType {
     App,
     Hrl,
+    CreateSpreadsheet,
     BlockActiveBoards
   }
 
@@ -76,6 +79,13 @@
                 default:
                   throw new Error("Unknown applet-view block type:"+weClient.renderInfo.view.block);
               }
+              break;
+            case "creatable":
+            switch (weClient.renderInfo.view.name) {
+                case "spreadsheet":
+                  renderType = RenderType.CreateSpreadsheet
+                  createView = weClient.renderInfo.view
+              }              
               break;
             case "attachable":
               switch (weClient.renderInfo.view.roleName) {
@@ -149,7 +159,9 @@
   {:else if $prof.status=="error"}
    Error when loading profile: {$prof.error}
   {:else}
-    {#if renderType== RenderType.App}
+    {#if renderType== RenderType.CreateSpreadsheet}
+      <ControllerCreate  view={createView} client={client} weClient={weClient} profilesStore={profilesStore} roleName={roleName}></ControllerCreate>
+    {:else if renderType== RenderType.App}
       <Controller  client={client} weClient={weClient} profilesStore={profilesStore} roleName={roleName}></Controller>
     {:else if  renderType== RenderType.Hrl && !hrlWithContext.context}
       <ControllerBoard  board={hrlWithContext.hrl[1]} client={client} weClient={weClient} profilesStore={profilesStore} roleName={roleName}></ControllerBoard>

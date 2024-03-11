@@ -1,10 +1,10 @@
 import { DocumentStore, SynClient, SynStore, WorkspaceStore } from '@holochain-syn/core';
-import { Board, type BoardEphemeralState, type BoardState } from './board';
+import type { BoardEphemeralState, BoardState } from './board';
 import { asyncDerived, pipe, sliceAndJoin, toPromise } from '@holochain-open-dev/stores';
 import { BoardType } from './boardList';
 import { LazyHoloHashMap } from '@holochain-open-dev/utils';
 import type { AppletHash, AppletServices, AttachableInfo, HrlWithContext, WeServices } from '@lightningrodlabs/we-applet';
-import { getMyDna, hrlWithContextToB64 } from './util';
+import { getMyDna } from './util';
 import type { AppAgentClient, RoleName, ZomeName } from '@holochain/client';
 
 const ROLE_NAME = "calcy"
@@ -32,25 +32,13 @@ const SHEET_ICON_SRC = `data:image/svg+xml;utf8,
 </svg>`
 
 export const appletServices: AppletServices = {
-    // Types of attachment that this Applet offers for other Applets to attach
-    attachmentTypes: async (
-      appletClient: AppAgentClient,
-      appletHash: AppletHash,
-      weServices: WeServices
-    ) => ({
-      board: {
-        label: "Board",
+    // Types of attachment that this Applet offers for other Applets to be created
+    creatables: {
+      'spreadsheet': {
+        label: "Spreadsheet",
         icon_src: SHEET_ICON_SRC,
-        async create(attachToHrlWithContext: HrlWithContext) {
-          const synStore = new SynStore(new SynClient(appletClient, ROLE_NAME));
-          const board = await Board.Create(synStore, {boundTo:[hrlWithContextToB64(attachToHrlWithContext)]})
-          const dnaHash = await getMyDna(ROLE_NAME, appletClient)
-          return {
-            hrl: [dnaHash, board.hash],
-          };
-        },
-      },
-    }),
+      }
+    },
     // Types of UI widgets/blocks that this Applet supports
     blockTypes: {
       'active_boards': {
@@ -59,6 +47,10 @@ export const appletServices: AppletServices = {
         `<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm64 0v64h64V96H64zm384 0H192v64H448V96zM64 224v64h64V224H64zm384 0H192v64H448V224zM64 352v64h64V352H64zm384 0H192v64H448V352z"/></svg>`,
         view: "applet-view",
       },      
+    },
+    bindAsset: async (appletClient: AppAgentClient,
+      srcWal: HrlWithContext, dstWal: HrlWithContext): Promise<void> => {
+      console.log("Bind requested.  Src:", srcWal, "  Dst:", dstWal)
     },
     getAttachableInfo: async (
       appletClient: AppAgentClient,

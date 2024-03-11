@@ -45,8 +45,8 @@ export default defineConfig({
           joiningAgents: [2],
         },
         {
-          name: 'notebooks',
-          instanceName: 'notebooks',
+          name: 'talking-stickies',
+          instanceName: 'talking-stickies',
           registeringAgent: 1,
           joiningAgents: [2],
         },
@@ -82,16 +82,16 @@ export default defineConfig({
         },
       },
       {
-      name: 'notebooks',
-      subtitle: 'Collaborative note taking',
-      description: 'Real-time notetaking based on syn',
+      name: 'talking-stickies',
+      subtitle: 'talking stickies',
+      description: 'Real-time stickies based on syn',
       icon: {
         type: 'https',
-        url: 'https://lightningrodlabs.org/projects/notebooks.png',
+        url: 'https://raw.githubusercontent.com/holochain-apps/gamez/main/we_dev/gamez_icon.svg',
       },
       source: {
         type: 'https',
-        url: 'https://github.com/lightningrodlabs/notebooks/releases/download/v0.2.0/notebooks.webhapp',
+        url: 'https://github.com/holochain-apps/talking-stickies/releases/download/v0.8.101/talking-stickies.webhapp',
       },
     },
   ],

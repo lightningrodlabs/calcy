@@ -15,7 +15,8 @@
     "@holochain-open-dev/utils": "^0.16.4",
     "@holochain-syn/core": "^0.12.1",
     "@holochain/client": "^0.16.7",
-    "@lightningrodlabs/we-applet": "^0.15.0-alpha.1",
+    "@lightningrodlabs/we-applet": "^0.15.0",
+    "@lightningrodlabs/we-elements": "^0.4.5",
     "@holochain/tryorama": "^0.11.0",
     "@mdi/js": "^7.1.96",
     "@ts-stack/markdown": "^1.5.0",
@@ -47,7 +48,7 @@
     "@univerjs/facade": "^0.1.2"
   },
   "devDependencies": {
-    "@lightningrodlabs/we-dev-cli": "^0.10.5-alpha.3",
+    "@lightningrodlabs/we-dev-cli": "^0.10.5",
     "@sveltejs/vite-plugin-svelte": "^2.0.2",
     "@tsconfig/svelte": "^3.0.0",
     "bestzip": "^2.2.0",
